@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Grommet,
   Table,
@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "grommet";
-import { getCustomers, getProducts, getSpecificFruitLimits } from "./requests";
+import { useCustomerData } from "./_utils/useCustomerData";
 
 const theme = {
   global: {
@@ -20,22 +20,7 @@ const theme = {
 };
 
 function App() {
-  const [customers, setCustomers] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [specificFruitLimits, setSpecificFruitLimits] = useState([]);
-
-  useEffect(() => {
-    // This will be a performance hit, but required until we can safely create data structure without data dependency issues.
-    Promise.all([getCustomers, getProducts, getSpecificFruitLimits]).then(
-      ([customers, products, specificFruitLimits]) => {
-        setCustomers(customers);
-        setProducts(products);
-        setSpecificFruitLimits(specificFruitLimits);
-      }
-    );
-  }, []);
-
-  console.log(customers, products, specificFruitLimits);
+  const { customers, products, specificFruitLimits } = useCustomerData();
 
   return (
     <Grommet theme={theme}>
