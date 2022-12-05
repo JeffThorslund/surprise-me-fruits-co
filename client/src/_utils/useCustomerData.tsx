@@ -20,7 +20,7 @@ export const useCustomerData = () => {
 
   useEffect(() => {
     // This will be a performance hit, but required until we can safely create data structure without data dependency issues.
-    Promise.all([getCustomers, getProducts, getSpecificFruitLimits]).then(
+    Promise.all([getCustomers(), getProducts(), getSpecificFruitLimits()]).then(
       ([customers, products, specificFruitLimits]) => {
         setCustomers(customers);
         setProducts(products);
