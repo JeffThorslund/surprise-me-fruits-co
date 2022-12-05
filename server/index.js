@@ -29,3 +29,14 @@ app.get("/customers", (req, res) => {
     });
 });
 
+// UPDATE
+app.put("/global-fruit-limit", (req, res) => {
+    const { customer_id, min, max } = req.body;
+    handlePoolQuery(
+        `UPDATE customer SET min= ${min}, max= ${max} WHERE id = ${customer_id}`,
+        (result) => {
+            res.json(result.rows);
+        }
+    );
+});
+
