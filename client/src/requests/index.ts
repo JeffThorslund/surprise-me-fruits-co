@@ -38,3 +38,31 @@ export const createSpecificFruitLimit = (
     },
     body: JSON.stringify({ customer_id: customerId, product_id: productId }),
   });
+
+export const deleteSpecificFruitLimit = (specificFruitLimitId: number) =>
+  fetch(basePath + "/specific-fruit-limit", {
+    method: "DELETE",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ specific_fruit_limit_id: specificFruitLimitId }),
+  });
+
+export const updateSpecificFruitLimit = (
+  specificFruitLimitId: number,
+  min: number,
+  max: number
+) =>
+  fetch(basePath + "/specific-fruit-limit", {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      specific_fruit_limit_id: specificFruitLimitId,
+      min,
+      max,
+    }),
+  });

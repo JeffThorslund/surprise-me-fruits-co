@@ -13,7 +13,12 @@ import {
 import { useCustomerData } from "./_utils/useCustomerData";
 import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
 import { Close } from "grommet-icons";
-import { createSpecificFruitLimit, updateCustomerLimit } from "./requests";
+import {
+  createSpecificFruitLimit,
+  deleteSpecificFruitLimit,
+  updateCustomerLimit,
+  updateSpecificFruitLimit,
+} from "./requests";
 
 const theme = {
   global: {
@@ -137,11 +142,17 @@ export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
       <LimitUpdateCellCluster
         max={props.specificFruitLimit.max}
         min={props.specificFruitLimit.min}
-        onSave={() => Promise.resolve()}
+        onSave={(min: number, max: number) => {
+          return updateSpecificFruitLimit(
+            props.specificFruitLimit.id,
+            min,
+            max
+          );
+        }}
       />
-      <TableCell>
-        <Close />
-      </TableCell>
+      <CloseIconCell
+        onClick={() => deleteSpecificFruitLimit(props.specificFruitLimit.id)}
+      />
     </TableRow>
   );
 };
@@ -253,6 +264,14 @@ export const ProductInputCell = (props: {
             createSpecificFruitLimit(props.customerDataItem.id, p.id),
         }))}
       />
+    </TableCell>
+  );
+};
+
+export const CloseIconCell = (props: { onClick: () => Promise<Response> }) => {
+  return (
+    <TableCell>
+      <Close onClick={props.onClick} />
     </TableCell>
   );
 };
