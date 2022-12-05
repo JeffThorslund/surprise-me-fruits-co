@@ -80,25 +80,49 @@ export const CustomerTableBody = (props: {
 }) => {
   return (
     <TableBody>
-      {props.customerDataTree.map(() => {
+      {props.customerDataTree.map((customerDataItem) => {
         return (
-          <>
-            <TableRow>
-              <TableCell scope="row">
-                <strong>Eric</strong>
-              </TableCell>
-              <TableCell>Coconut</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell scope="row">
-                <strong>Chris</strong>
-              </TableCell>
-              <TableCell>Watermelon</TableCell>
-            </TableRow>
-          </>
+          <CustomerTableSection
+            key={customerDataItem.id}
+            setCustomers={props.setCustomers}
+            customerDataItem={customerDataItem}
+            selectableProducts={props.products.filter(
+              (product) =>
+                !customerDataItem.specificFruitLimits
+                  .map((sfl) => sfl.productId)
+                  .includes(product.id)
+            )}
+          />
         );
       })}
     </TableBody>
+  );
+};
+
+export const CustomerTableSection = (props: {
+  customerDataItem: CustomerDataItem;
+  setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>;
+  selectableProducts: ProductDB[];
+}) => {
+  return (
+    <>
+      <TableRow>
+        <TableCell scope="row">
+          <strong>CustomerRowChris</strong>
+        </TableCell>
+        <TableCell>Watermelon</TableCell>
+      </TableRow>
+      {props.customerDataItem.specificFruitLimits.map((specificFruitLimit) => {
+        return (
+          <TableRow>
+            <TableCell scope="row">
+              <strong>ProductRowJeff</strong>
+            </TableCell>
+            <TableCell>Watermelon</TableCell>
+          </TableRow>
+        );
+      })}
+    </>
   );
 };
 
