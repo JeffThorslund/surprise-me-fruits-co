@@ -23,7 +23,10 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - "ALLOW_EMPTY_PASSWORD=yes"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: database
+
     volumes:
       - ./database/customers.sql:/docker-entrypoint-initdb.d/customers.sql
       - ./database/products.sql:/docker-entrypoint-initdb.d/products.sql

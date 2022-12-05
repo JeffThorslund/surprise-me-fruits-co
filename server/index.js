@@ -16,5 +16,5 @@ app.use(
 app.use("/api", router);
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${process.env.PORT || port}`);
 });
