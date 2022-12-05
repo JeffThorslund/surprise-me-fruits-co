@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const pool = require("./db")
-
+const poolErrorHandler = require("./helpers/poolErrorHandler")
 const port = 8080;
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,8 +18,8 @@ app.listen(port, () => {
 });
 
 app.get("/products", (req, res) => {
-    return pool.query("SELECT * from product", (err, result) => {
-        res.send(result.rows)
-    })
+    poolErrorHandler("SELECT * from product", (result) => {
+        res.json(result.rows);
+    });
 })
 
