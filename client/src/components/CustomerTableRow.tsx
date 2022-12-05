@@ -26,7 +26,7 @@ export const CustomerTableRow = (props: {
       </TableCell>
       <ProductInputCell
         setSpecificFruitLimits={props.setSpecificFruitLimits}
-        customerDataItem={props.customerDataItem}
+        customerId={props.customerDataItem.id}
         selectableProducts={props.selectableProducts}
       />
       <LimitUpdateCellCluster
