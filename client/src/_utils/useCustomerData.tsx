@@ -1,29 +1,15 @@
 import { useEffect, useState } from "react";
 import { getCustomers, getProducts, getSpecificFruitLimits } from "../requests";
-import { CustomerDataItem, IDictionary, SFL } from "../types";
+import {
+  CustomerDataItem,
+  CustomerDB,
+  IDictionary,
+  ProductDB,
+  SFL,
+  SpecificFruitLimitDB,
+} from "../types";
 
 // Database Types
-
-interface CustomerDB {
-  id: number;
-  alpha_identifier: string;
-  name: string;
-  max: number;
-  min: number;
-}
-
-interface ProductDB {
-  id: number;
-  product_name: string;
-}
-
-interface SpecificFruitLimitDB {
-  id: number;
-  customer_id: number;
-  product_id: number;
-  min: number;
-  max: number;
-}
 
 export const useCustomerData = () => {
   const [customers, setCustomers] = useState<CustomerDB[]>([]);
