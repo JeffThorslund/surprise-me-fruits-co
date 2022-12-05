@@ -11,7 +11,13 @@ import {
   TextInput,
 } from "grommet";
 import { useCustomerData } from "./_utils/useCustomerData";
-import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
+import {
+  CustomerDataItem,
+  CustomerDB,
+  ProductDB,
+  SFL,
+  SpecificFruitLimitDB,
+} from "./types";
 import { Close } from "grommet-icons";
 import {
   createSpecificFruitLimit,
@@ -19,6 +25,10 @@ import {
   updateCustomerLimit,
   updateSpecificFruitLimit,
 } from "./requests";
+import {
+  addLocalProduct,
+  updateLocalCustomerLimit,
+} from "./_utils/mutations/updateCustomerList";
 
 const theme = {
   global: {
@@ -31,13 +41,15 @@ const theme = {
 };
 
 function App() {
-  const { customerDataTree, setCustomers, products } = useCustomerData();
+  const { customerDataTree, setCustomers, setSpecificFruitLimits, products } =
+    useCustomerData();
 
   return (
     <Grommet theme={theme}>
       <CustomerTable
         customerDataTree={customerDataTree}
         setCustomers={setCustomers}
+        setSpecificFruitLimits={setSpecificFruitLimits}
         products={products}
       />
     </Grommet>
@@ -47,6 +59,9 @@ function App() {
 const CustomerTable = (props: {
   customerDataTree: CustomerDataItem[];
   setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>;
+  setSpecificFruitLimits: React.Dispatch<
+    React.SetStateAction<SpecificFruitLimitDB[]>
+  >;
   products: ProductDB[];
 }) => {
   return (
@@ -55,6 +70,7 @@ const CustomerTable = (props: {
       <CustomerTableBody
         customerDataTree={props.customerDataTree}
         setCustomers={props.setCustomers}
+        setSpecificFruitLimits={props.setSpecificFruitLimits}
         products={props.products}
       />
     </Table>
@@ -85,6 +101,9 @@ export const CustomerTableHeader = () => {
 
 export const CustomerTableBody = (props: {
   setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>;
+  setSpecificFruitLimits: React.Dispatch<
+    React.SetStateAction<SpecificFruitLimitDB[]>
+  >;
   customerDataTree: CustomerDataItem[];
   products: ProductDB[];
 }) => {
@@ -95,6 +114,7 @@ export const CustomerTableBody = (props: {
           <CustomerTableSection
             key={customerDataItem.id}
             setCustomers={props.setCustomers}
+            setSpecificFruitLimits={props.setSpecificFruitLimits}
             customerDataItem={customerDataItem}
             selectableProducts={props.products.filter(
               (product) =>
@@ -112,6 +132,9 @@ export const CustomerTableBody = (props: {
 export const CustomerTableSection = (props: {
   customerDataItem: CustomerDataItem;
   setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>;
+  setSpecificFruitLimits: React.Dispatch<
+    React.SetStateAction<SpecificFruitLimitDB[]>
+  >;
   selectableProducts: ProductDB[];
 }) => {
   return (
@@ -120,6 +143,7 @@ export const CustomerTableSection = (props: {
         key={props.customerDataItem.id}
         customerDataItem={props.customerDataItem}
         setCustomers={props.setCustomers}
+        setSpecificFruitLimits={props.setSpecificFruitLimits}
         selectableProducts={props.selectableProducts}
       />
       {props.customerDataItem.specificFruitLimits.map((specificFruitLimit) => {
@@ -160,6 +184,9 @@ export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
 export const CustomerTableRow = (props: {
   customerDataItem: CustomerDataItem;
   setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>;
+  setSpecificFruitLimits: React.Dispatch<
+    React.SetStateAction<SpecificFruitLimitDB[]>
+  >;
   selectableProducts: ProductDB[];
 }) => {
   return (
@@ -168,6 +195,7 @@ export const CustomerTableRow = (props: {
         <strong>{props.customerDataItem.name}</strong>
       </TableCell>
       <ProductInputCell
+        setSpecificFruitLimits={props.setSpecificFruitLimits}
         customerDataItem={props.customerDataItem}
         selectableProducts={props.selectableProducts}
       />
@@ -175,7 +203,18 @@ export const CustomerTableRow = (props: {
         max={props.customerDataItem.max}
         min={props.customerDataItem.min}
         onSave={(min: number, max: number) => {
-          return updateCustomerLimit(props.customerDataItem.id, min, max);
+          return updateCustomerLimit(props.customerDataItem.id, min, max).then(
+            (data) => {
+              updateLocalCustomerLimit(
+                props.setCustomers,
+                props.customerDataItem.id,
+                min,
+                max
+              );
+
+              return data;
+            }
+          );
         }}
       />
     </TableRow>
@@ -253,6 +292,9 @@ export const LimitInputCell = (props: {
 export const ProductInputCell = (props: {
   customerDataItem: CustomerDataItem;
   selectableProducts: ProductDB[];
+  setSpecificFruitLimits: React.Dispatch<
+    React.SetStateAction<SpecificFruitLimitDB[]>
+  >;
 }) => {
   return (
     <TableCell scope="row">
@@ -261,12 +303,29 @@ export const ProductInputCell = (props: {
         items={props.selectableProducts.map((p) => ({
           label: p.product_name,
           onClick: () =>
-            createSpecificFruitLimit(props.customerDataItem.id, p.id),
+            createSpecificFruitLimit(props.customerDataItem.id, p.id).then(
+              async (data) => {
+                addLocalProduct(
+                  props.setSpecificFruitLimits,
+                  getRandomInt(),
+                  props.customerDataItem.id,
+                  p.id,
+                  0,
+                  100
+                );
+
+                return data;
+              }
+            ),
         }))}
       />
     </TableCell>
   );
 };
+
+function getRandomInt(max = Number.MAX_SAFE_INTEGER) {
+  return Math.floor(Math.random() * max);
+}
 
 export const CloseIconCell = (props: { onClick: () => Promise<Response> }) => {
   return (

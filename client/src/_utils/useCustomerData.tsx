@@ -36,6 +36,7 @@ export const useCustomerData = () => {
       specificFruitLimits
     ),
     setCustomers,
+    setSpecificFruitLimits,
     products,
   };
 };
