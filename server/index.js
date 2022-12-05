@@ -23,3 +23,9 @@ app.get("/products", (req, res) => {
     });
 })
 
+app.get("/customers", (req, res) => {
+    poolErrorHandler("SELECT * from customer", (result) => {
+        res.json(result.rows);
+    });
+});
+
