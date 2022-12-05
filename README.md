@@ -1,3 +1,42 @@
 # Surprise Me Fruit Co.
 
 All your produce tracking needs in a single dashboard.
+
+## Overview
+
+Here at "Surprise Me Fruits Company", we have created a customer dashboard for overseeing ordering limits on "per
+customer" basis. After every change you make, press "Save" to persist it in the database, or "Reset" to go back to its
+original value.
+
+Try:
+
+* Adjusting global customer minimums and maximums.
+* Adding a specific product from the product dropdown.
+* Adjusting the max and min of specific fruits.
+* Deleting a specific product from any customer.
+* Reading validation messages when incorrect values are saved. (Bonus #1)
+
+## To Run
+
+```shell
+    docker-compose build
+    docker-compose up
+```
+
+Go to `http://localhost:3000/`
+
+## Layers
+### Database
+* Postgres
+
+### Server
+* Node.js and Express
+* Javascript was used to prioritize speed over type-safety
+
+### Client
+* React for declarative style and re-components
+* Typescript for type-safety in prop passing, componentization and state updating methods
+* Grommet UI for quick UI prototyping
+
+### Build Tools
+* Docker
