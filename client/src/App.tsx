@@ -25,9 +25,14 @@ function App() {
   const [specificFruitLimits, setSpecificFruitLimits] = useState([]);
 
   useEffect(() => {
-    getCustomers.then((data) => setCustomers(data));
-    getProducts.then((data) => setProducts(data));
-    getSpecificFruitLimits.then((data) => setSpecificFruitLimits(data));
+    // This will be a performance hit, but required until we can safely create data structure without data dependency issues.
+    Promise.all([getCustomers, getProducts, getSpecificFruitLimits]).then(
+      ([customers, products, specificFruitLimits]) => {
+        setCustomers(customers);
+        setProducts(products);
+        setSpecificFruitLimits(specificFruitLimits);
+      }
+    );
   }, []);
 
   console.log(customers, products, specificFruitLimits);
