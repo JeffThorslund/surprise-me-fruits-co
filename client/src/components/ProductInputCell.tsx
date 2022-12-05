@@ -30,8 +30,8 @@ export const ProductInputCell = (props: {
                   getRandomInt(),
                   props.customerId,
                   p.id,
-                  0,
-                  100
+                  1,
+                  10
                 );
 
                 return data;
