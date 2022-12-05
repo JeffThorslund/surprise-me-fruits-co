@@ -32,16 +32,7 @@ function App() {
 const CustomerTable = () => {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableCell scope="col" border="bottom">
-            Name
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Flavor
-          </TableCell>
-        </TableRow>
-      </TableHeader>
+      <CustomerTableHeader />
       <TableBody>
         <TableRow>
           <TableCell scope="row">
@@ -57,6 +48,28 @@ const CustomerTable = () => {
         </TableRow>
       </TableBody>
     </Table>
+  );
+};
+
+export const CustomerTableHeader = () => {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableCell scope="col" border="bottom">
+          Name
+        </TableCell>
+        <TableCell scope="col" border="bottom">
+          Product
+        </TableCell>
+        <TableCell scope="col" border="bottom">
+          Min
+        </TableCell>
+        <TableCell scope="col" border="bottom">
+          Max
+        </TableCell>
+        <TableCell scope="col" border="bottom" />
+      </TableRow>
+    </TableHeader>
   );
 };
 
