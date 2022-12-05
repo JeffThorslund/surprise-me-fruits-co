@@ -150,4 +150,8 @@ export const CustomerTableRow = (props: {
   );
 };
 
+export const VoidCell = () => {
+  return <TableCell scope="row" />;
+};
+
 export default App;
