@@ -13,6 +13,7 @@ import {
 import { useCustomerData } from "./_utils/useCustomerData";
 import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
 import { Close } from "grommet-icons";
+import { updateCustomerLimit } from "./requests";
 
 const theme = {
   global: {
@@ -136,6 +137,7 @@ export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
       <LimitUpdateCellCluster
         max={props.specificFruitLimit.max}
         min={props.specificFruitLimit.min}
+        onSave={() => Promise.resolve()}
       />
       <TableCell>
         <Close />
@@ -164,6 +166,9 @@ export const CustomerTableRow = (props: {
       <LimitUpdateCellCluster
         max={props.customerDataItem.max}
         min={props.customerDataItem.min}
+        onSave={(min: number, max: number) => {
+          return updateCustomerLimit(props.customerDataItem.id, min, max);
+        }}
       />
     </TableRow>
   );
@@ -173,7 +178,11 @@ export const VoidCell = () => {
   return <TableCell scope="row" />;
 };
 
-export const LimitUpdateCellCluster = (props: { min: number; max: number }) => {
+export const LimitUpdateCellCluster = (props: {
+  min: number;
+  max: number;
+  onSave: (min: number, max: number) => Promise<void | Response>;
+}) => {
   const [min, setMin] = useState(props.min);
   const [max, setMax] = useState(props.max);
 
@@ -190,7 +199,13 @@ export const LimitUpdateCellCluster = (props: { min: number; max: number }) => {
       {didValueChange(props.min, min) || didValueChange(props.max, max) ? (
         <>
           <TableCell>
-            <Button primary label="Save" />
+            <Button
+              primary
+              label="Save"
+              onClick={() => {
+                props.onSave(min, max);
+              }}
+            />
           </TableCell>
 
           <TableCell>

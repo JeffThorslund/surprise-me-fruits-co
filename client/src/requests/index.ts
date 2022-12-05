@@ -11,3 +11,17 @@ export const getProducts = fetch(basePath + "/products").then((response) =>
 export const getSpecificFruitLimits = fetch(
   basePath + "/specific-fruit-limit"
 ).then((response) => response.json());
+
+export const updateCustomerLimit = (
+  customerId: number,
+  min: number,
+  max: number
+) =>
+  fetch(basePath + "/global-fruit-limit", {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ customer_id: customerId, min, max }),
+  });
