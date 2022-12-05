@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "grommet";
 import { useCustomerData } from "./_utils/useCustomerData";
-import { CustomerDataItem, CustomerDB, ProductDB } from "./types";
+import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
 
 const theme = {
   global: {
@@ -106,23 +106,47 @@ export const CustomerTableSection = (props: {
 }) => {
   return (
     <>
-      <TableRow>
-        <TableCell scope="row">
-          <strong>CustomerRowChris</strong>
-        </TableCell>
-        <TableCell>Watermelon</TableCell>
-      </TableRow>
+      <CustomerTableRow
+        key={props.customerDataItem.id}
+        customerDataItem={props.customerDataItem}
+        setCustomers={props.setCustomers}
+        selectableProducts={props.selectableProducts}
+      />
       {props.customerDataItem.specificFruitLimits.map((specificFruitLimit) => {
         return (
-          <TableRow>
-            <TableCell scope="row">
-              <strong>ProductRowJeff</strong>
-            </TableCell>
-            <TableCell>Watermelon</TableCell>
-          </TableRow>
+          <ProductTableRow
+            key={specificFruitLimit.id}
+            specificFruitLimit={specificFruitLimit}
+          />
         );
       })}
     </>
+  );
+};
+
+export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
+  return (
+    <TableRow>
+      <TableCell scope="row">
+        <strong>Chris</strong>
+      </TableCell>
+      <TableCell>Watermelon</TableCell>
+    </TableRow>
+  );
+};
+
+export const CustomerTableRow = (props: {
+  customerDataItem: CustomerDataItem;
+  setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>;
+  selectableProducts: ProductDB[];
+}) => {
+  return (
+    <TableRow>
+      <TableCell scope="row">
+        <strong>ProductRowJeff</strong>
+      </TableCell>
+      <TableCell>Watermelon</TableCell>
+    </TableRow>
   );
 };
 
