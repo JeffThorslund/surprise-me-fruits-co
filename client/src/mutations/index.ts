@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomerDB, SpecificFruitLimitDB } from "../../types";
+import { CustomerDB, SpecificFruitLimitDB } from "../types";
 
 export const updateLocalCustomerLimit = (
   setCustomers: React.Dispatch<React.SetStateAction<CustomerDB[]>>,
