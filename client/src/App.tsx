@@ -27,8 +27,10 @@ import {
 } from "./requests";
 import {
   addLocalProduct,
+  removeLocalProduct,
   updateLocalCustomerLimit,
-} from "./_utils/mutations/updateCustomerList";
+  updateLocalProductLimit,
+} from "./_utils/mutations";
 
 const theme = {
   global: {
@@ -151,6 +153,7 @@ export const CustomerTableSection = (props: {
           <ProductTableRow
             key={specificFruitLimit.id}
             specificFruitLimit={specificFruitLimit}
+            setSpecificFruitLimits={props.setSpecificFruitLimits}
           />
         );
       })}
@@ -158,7 +161,12 @@ export const CustomerTableSection = (props: {
   );
 };
 
-export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
+export const ProductTableRow = (props: {
+  specificFruitLimit: SFL;
+  setSpecificFruitLimits: React.Dispatch<
+    React.SetStateAction<SpecificFruitLimitDB[]>
+  >;
+}) => {
   return (
     <TableRow>
       <VoidCell />
@@ -171,11 +179,28 @@ export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
             props.specificFruitLimit.id,
             min,
             max
-          );
+          ).then((data) => {
+            updateLocalProductLimit(
+              props.setSpecificFruitLimits,
+              props.specificFruitLimit.id,
+              min,
+              max
+            );
+
+            return data;
+          });
         }}
       />
       <CloseIconCell
-        onClick={() => deleteSpecificFruitLimit(props.specificFruitLimit.id)}
+        onClick={() =>
+          deleteSpecificFruitLimit(props.specificFruitLimit.id).then((data) => {
+            removeLocalProduct(
+              props.setSpecificFruitLimits,
+              props.specificFruitLimit.id
+            );
+            return data;
+          })
+        }
       />
     </TableRow>
   );
