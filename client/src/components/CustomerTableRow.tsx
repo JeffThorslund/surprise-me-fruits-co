@@ -19,6 +19,19 @@ export const CustomerTableRow = (props: {
   >;
   selectableProducts: ProductDB[];
 }) => {
+  const minSumOfProducts =
+    props.customerDataItem.specificFruitLimits.reduce<number>((prev, curr) => {
+      return prev + curr.min;
+    }, 0);
+
+  const maxSumOfProducts =
+    props.customerDataItem.specificFruitLimits.reduce<number>((prev, curr) => {
+      return prev + curr.max;
+    }, 0);
+
+  const doesMinExceedTotal = minSumOfProducts > props.customerDataItem.min;
+  const doesMaxExceedTotal = maxSumOfProducts > props.customerDataItem.max;
+
   return (
     <TableRow>
       <TableCell scope="row">
@@ -47,6 +60,12 @@ export const CustomerTableRow = (props: {
           );
         }}
       />
+      {doesMinExceedTotal ? (
+        <TableCell>Minimum product limits exceed customer limit</TableCell>
+      ) : null}
+      {doesMaxExceedTotal ? (
+        <TableCell>Maximum product limits exceed customer limit</TableCell>
+      ) : null}
     </TableRow>
   );
 };

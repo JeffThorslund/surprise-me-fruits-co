@@ -4,7 +4,7 @@ CREATE TABLE customer
     alpha_identifier text NOT NULL,
     name text NOT NULL,
     max integer DEFAULT 100,
-    min integer DEFAULT 0
+    min integer DEFAULT 10
 );
 
 INSERT INTO customer("alpha_identifier", "name")

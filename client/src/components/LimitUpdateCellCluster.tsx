@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TableCell, Tag } from "grommet";
+import { Box, Button, TableCell } from "grommet";
 import { LimitInputCell } from "./LimitInputCell";
 import { didValueChange } from "./_utils";
 
@@ -28,37 +28,36 @@ export const LimitUpdateCellCluster = (props: {
         limit={max}
         onChange={(e) => setMax(Number(e.target.value))}
       />
-      {!areFieldsValid ? (
-        <TableCell>
-          <Tag value={"Invalid Fields"} />
-        </TableCell>
-      ) : null}
+
       {didValueChange(props.min, min) || didValueChange(props.max, max) ? (
         <>
           <TableCell>
-            <Button
-              disabled={globalLoadIndicator || !areFieldsValid}
-              primary
-              label="Save"
-              onClick={() => {
-                setIsLoading(true);
-                props.onSave(min, max).finally(() => {
-                  setIsLoading(false);
-                });
-              }}
-            />
-          </TableCell>
-
-          <TableCell>
-            <Button
-              disabled={globalLoadIndicator}
-              secondary
-              label="Reset"
-              onClick={() => {
-                setMin(props.min);
-                setMax(props.max);
-              }}
-            />
+            <Box direction={"row"}>
+              <Box pad={"small"}>
+                <Button
+                  disabled={globalLoadIndicator || !areFieldsValid}
+                  primary
+                  label="Save"
+                  onClick={() => {
+                    setIsLoading(true);
+                    props.onSave(min, max).finally(() => {
+                      setIsLoading(false);
+                    });
+                  }}
+                />
+              </Box>
+              <Box pad={"small"}>
+                <Button
+                  disabled={globalLoadIndicator}
+                  secondary
+                  label="Reset"
+                  onClick={() => {
+                    setMin(props.min);
+                    setMax(props.max);
+                  }}
+                />
+              </Box>
+            </Box>
           </TableCell>
         </>
       ) : null}

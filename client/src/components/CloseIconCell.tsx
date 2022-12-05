@@ -1,4 +1,4 @@
-import { Spinner, TableCell } from "grommet";
+import { Box, Spinner, TableCell } from "grommet";
 import { Close } from "grommet-icons";
 import React from "react";
 
@@ -8,11 +8,13 @@ export const CloseIconCell = (props: {
 }) => {
   return (
     <TableCell>
-      {props.isLoading ? (
-        <Spinner />
-      ) : (
-        <Close style={{ cursor: "pointer" }} onClick={props.onClick} />
-      )}
+      <Box>
+        {props.isLoading ? (
+          <Spinner />
+        ) : (
+          <Close style={{ cursor: "pointer" }} onClick={props.onClick} />
+        )}
+      </Box>
     </TableCell>
   );
 };
