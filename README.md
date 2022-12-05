@@ -39,3 +39,8 @@ Go to `http://localhost:3000/`
 
 ### Build Tools
 * Docker
+
+## Future Steps
+* Automated testing
+* Granular authentication and authorization for various roles
+* Server-side input validation
