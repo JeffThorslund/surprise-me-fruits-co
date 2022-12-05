@@ -20,7 +20,7 @@ const theme = {
 };
 
 function App() {
-  const { customers, products, specificFruitLimits } = useCustomerData();
+  const { customerDataTree, setCustomers, products } = useCustomerData();
 
   return (
     <Grommet theme={theme}>
