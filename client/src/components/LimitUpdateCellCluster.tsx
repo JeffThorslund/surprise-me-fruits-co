@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TableCell } from "grommet";
+import { Button, TableCell, Tag } from "grommet";
 import { LimitInputCell } from "./LimitInputCell";
 import { didValueChange } from "./_utils";
 
@@ -14,6 +14,7 @@ export const LimitUpdateCellCluster = (props: {
   const [isLoading, setIsLoading] = useState(false);
 
   const globalLoadIndicator = props.isLoading || isLoading;
+  const areFieldsValid = max >= min;
 
   return (
     <>
@@ -27,11 +28,16 @@ export const LimitUpdateCellCluster = (props: {
         limit={max}
         onChange={(e) => setMax(Number(e.target.value))}
       />
+      {!areFieldsValid ? (
+        <TableCell>
+          <Tag value={"Invalid Fields"} />
+        </TableCell>
+      ) : null}
       {didValueChange(props.min, min) || didValueChange(props.max, max) ? (
         <>
           <TableCell>
             <Button
-              disabled={globalLoadIndicator}
+              disabled={globalLoadIndicator || !areFieldsValid}
               primary
               label="Save"
               onClick={() => {
