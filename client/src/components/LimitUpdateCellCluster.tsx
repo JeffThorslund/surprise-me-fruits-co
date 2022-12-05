@@ -10,14 +10,17 @@ export const LimitUpdateCellCluster = (props: {
 }) => {
   const [min, setMin] = useState(props.min);
   const [max, setMax] = useState(props.max);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
       <LimitInputCell
+        isLoading={isLoading}
         limit={min}
         onChange={(e) => setMin(Number(e.target.value))}
       />
       <LimitInputCell
+        isLoading={isLoading}
         limit={max}
         onChange={(e) => setMax(Number(e.target.value))}
       />
@@ -25,16 +28,21 @@ export const LimitUpdateCellCluster = (props: {
         <>
           <TableCell>
             <Button
+              disabled={isLoading}
               primary
               label="Save"
               onClick={() => {
-                props.onSave(min, max);
+                setIsLoading(true);
+                props.onSave(min, max).finally(() => {
+                  setIsLoading(false);
+                });
               }}
             />
           </TableCell>
 
           <TableCell>
             <Button
+              disabled={isLoading}
               secondary
               label="Reset"
               onClick={() => {
