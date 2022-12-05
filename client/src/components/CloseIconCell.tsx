@@ -8,7 +8,11 @@ export const CloseIconCell = (props: {
 }) => {
   return (
     <TableCell>
-      {props.isLoading ? <Spinner /> : <Close onClick={props.onClick} />}
+      {props.isLoading ? (
+        <Spinner />
+      ) : (
+        <Close style={{ cursor: "pointer" }} onClick={props.onClick} />
+      )}
     </TableCell>
   );
 };

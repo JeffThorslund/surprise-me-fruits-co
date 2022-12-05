@@ -1,9 +1,11 @@
 import React from "react";
 import { Grommet } from "grommet";
-import { useCustomerData } from "../_utils/useCustomerData";
-import { CustomerTable } from "./CustomerTable";
+import { useCustomerData } from "./_utils/useCustomerData";
+import { CustomerTable } from "./components/CustomerTable";
+import { HeaderNav } from "./components/HeaderNav";
+import { ThemeType } from "grommet";
 
-const theme = {
+const theme: ThemeType = {
   global: {
     font: {
       family: "Roboto",
@@ -19,6 +21,7 @@ function App() {
 
   return (
     <Grommet theme={theme}>
+      <HeaderNav />
       <CustomerTable
         customerDataTree={customerDataTree}
         setCustomers={setCustomers}
