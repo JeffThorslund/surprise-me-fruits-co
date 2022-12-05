@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grommet,
   Table,
@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "grommet";
+import { getCustomers, getProducts, getSpecificFruitLimits } from "./requests";
 
 const theme = {
   global: {
@@ -19,6 +20,18 @@ const theme = {
 };
 
 function App() {
+  const [customers, setCustomers] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [specificFruitLimits, setSpecificFruitLimits] = useState([]);
+
+  useEffect(() => {
+    getCustomers.then((data) => setCustomers(data));
+    getProducts.then((data) => setProducts(data));
+    getSpecificFruitLimits.then((data) => setSpecificFruitLimits(data));
+  }, []);
+
+  console.log(customers, products, specificFruitLimits);
+
   return (
     <Grommet theme={theme}>
       <Table>
