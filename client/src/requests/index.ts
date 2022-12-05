@@ -25,3 +25,16 @@ export const updateCustomerLimit = (
     },
     body: JSON.stringify({ customer_id: customerId, min, max }),
   });
+
+export const createSpecificFruitLimit = (
+  customerId: number,
+  productId: number
+) =>
+  fetch(basePath + "/specific-fruit-limit", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ customer_id: customerId, product_id: productId }),
+  });

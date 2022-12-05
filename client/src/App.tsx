@@ -13,7 +13,7 @@ import {
 import { useCustomerData } from "./_utils/useCustomerData";
 import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
 import { Close } from "grommet-icons";
-import { updateCustomerLimit } from "./requests";
+import { createSpecificFruitLimit, updateCustomerLimit } from "./requests";
 
 const theme = {
   global: {
@@ -156,12 +156,9 @@ export const CustomerTableRow = (props: {
       <TableCell scope="row">
         <strong>{props.customerDataItem.name}</strong>
       </TableCell>
-      <Menu
-        label="Add New Product"
-        items={[
-          { label: "Product One", onClick: () => {} },
-          { label: "Product Two", onClick: () => {} },
-        ]}
+      <ProductInputCell
+        customerDataItem={props.customerDataItem}
+        selectableProducts={props.selectableProducts}
       />
       <LimitUpdateCellCluster
         max={props.customerDataItem.max}
@@ -237,6 +234,24 @@ export const LimitInputCell = (props: {
         type={"number"}
         value={props.limit}
         onChange={props.onChange}
+      />
+    </TableCell>
+  );
+};
+
+export const ProductInputCell = (props: {
+  customerDataItem: CustomerDataItem;
+  selectableProducts: ProductDB[];
+}) => {
+  return (
+    <TableCell scope="row">
+      <Menu
+        label="Add New Product"
+        items={props.selectableProducts.map((p) => ({
+          label: p.product_name,
+          onClick: () =>
+            createSpecificFruitLimit(props.customerDataItem.id, p.id),
+        }))}
       />
     </TableCell>
   );
