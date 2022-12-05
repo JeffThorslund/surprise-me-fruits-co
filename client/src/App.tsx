@@ -1,11 +1,13 @@
 import React from "react";
 import {
   Grommet,
+  Menu,
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
+  TextInput,
 } from "grommet";
 import { useCustomerData } from "./_utils/useCustomerData";
 import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
@@ -143,9 +145,21 @@ export const CustomerTableRow = (props: {
   return (
     <TableRow>
       <TableCell scope="row">
-        <strong>ProductRowJeff</strong>
+        <strong>{props.customerDataItem.name}</strong>
       </TableCell>
-      <TableCell>Watermelon</TableCell>
+      <Menu
+        label="Add New Product"
+        items={[
+          { label: "Product One", onClick: () => {} },
+          { label: "Product Two", onClick: () => {} },
+        ]}
+      />
+      <TableCell scope="row">
+        <TextInput />
+      </TableCell>
+      <TableCell scope="row">
+        <TextInput />
+      </TableCell>
     </TableRow>
   );
 };
