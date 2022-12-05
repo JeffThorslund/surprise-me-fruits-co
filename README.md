@@ -8,13 +8,12 @@ Here at "Surprise Me Fruits Company", we have created a customer dashboard for o
 customer" basis. After every change you make, press "Save" to persist it in the database, or "Reset" to go back to its
 original value.
 
-Try:
-
-* Adjusting global customer minimums and maximums.
-* Adding a specific product from the product dropdown.
-* Adjusting the max and min of specific fruits.
-* Deleting a specific product from any customer.
-* Reading validation messages when incorrect values are saved. (Bonus #1)
+* Adjust global customer minimums and maximums.
+* Add a specific product from the product dropdown.
+* Adjust the max and min of specific fruits.
+* Delete a specific product from any customer.
+* Read validation messages when incorrect values are saved. (Bonus #1)
+* See UI loading states during pending requests.
 
 ## To Run
 
