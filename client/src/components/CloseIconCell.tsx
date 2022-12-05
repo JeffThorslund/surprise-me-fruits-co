@@ -1,11 +1,14 @@
-import { TableCell } from "grommet";
+import { Spinner, TableCell } from "grommet";
 import { Close } from "grommet-icons";
 import React from "react";
 
-export const CloseIconCell = (props: { onClick: () => Promise<Response> }) => {
+export const CloseIconCell = (props: {
+  onClick: () => Promise<Response>;
+  isLoading: boolean;
+}) => {
   return (
     <TableCell>
-      <Close onClick={props.onClick} />
+      {props.isLoading ? <Spinner /> : <Close onClick={props.onClick} />}
     </TableCell>
   );
 };

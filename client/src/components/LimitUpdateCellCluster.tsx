@@ -7,20 +7,23 @@ export const LimitUpdateCellCluster = (props: {
   min: number;
   max: number;
   onSave: (min: number, max: number) => Promise<void | Response>;
+  isLoading?: boolean;
 }) => {
   const [min, setMin] = useState(props.min);
   const [max, setMax] = useState(props.max);
   const [isLoading, setIsLoading] = useState(false);
 
+  const globalLoadIndicator = props.isLoading || isLoading;
+
   return (
     <>
       <LimitInputCell
-        isLoading={isLoading}
+        isLoading={globalLoadIndicator}
         limit={min}
         onChange={(e) => setMin(Number(e.target.value))}
       />
       <LimitInputCell
-        isLoading={isLoading}
+        isLoading={globalLoadIndicator}
         limit={max}
         onChange={(e) => setMax(Number(e.target.value))}
       />
@@ -28,7 +31,7 @@ export const LimitUpdateCellCluster = (props: {
         <>
           <TableCell>
             <Button
-              disabled={isLoading}
+              disabled={globalLoadIndicator}
               primary
               label="Save"
               onClick={() => {
@@ -42,7 +45,7 @@ export const LimitUpdateCellCluster = (props: {
 
           <TableCell>
             <Button
-              disabled={isLoading}
+              disabled={globalLoadIndicator}
               secondary
               label="Reset"
               onClick={() => {

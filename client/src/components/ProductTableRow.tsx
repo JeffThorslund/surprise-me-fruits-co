@@ -1,5 +1,5 @@
 import { SFL, SpecificFruitLimitDB } from "../types";
-import React from "react";
+import React, { useState } from "react";
 import { TableCell, TableRow } from "grommet";
 import {
   deleteSpecificFruitLimit,
@@ -16,11 +16,14 @@ export const ProductTableRow = (props: {
     React.SetStateAction<SpecificFruitLimitDB[]>
   >;
 }) => {
+  const [isRowLoading, setIsRowLoading] = useState(false);
+
   return (
     <TableRow>
       <VoidCell />
       <TableCell>{props.specificFruitLimit.productName}</TableCell>
       <LimitUpdateCellCluster
+        isLoading={isRowLoading}
         max={props.specificFruitLimit.max}
         min={props.specificFruitLimit.min}
         onSave={(min: number, max: number) => {
@@ -41,15 +44,19 @@ export const ProductTableRow = (props: {
         }}
       />
       <CloseIconCell
-        onClick={() =>
-          deleteSpecificFruitLimit(props.specificFruitLimit.id).then((data) => {
-            removeLocalProduct(
-              props.setSpecificFruitLimits,
-              props.specificFruitLimit.id
-            );
-            return data;
-          })
-        }
+        isLoading={isRowLoading}
+        onClick={() => {
+          setIsRowLoading(true);
+          return deleteSpecificFruitLimit(props.specificFruitLimit.id)
+            .then((data) => {
+              removeLocalProduct(
+                props.setSpecificFruitLimits,
+                props.specificFruitLimit.id
+              );
+              return data;
+            })
+            .finally(() => setIsRowLoading(false));
+        }}
       />
     </TableRow>
   );
