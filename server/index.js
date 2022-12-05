@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const pool = require("./db")
 
 const port = 8080;
 
@@ -16,3 +17,10 @@ app.use(
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
+
+app.get("/products", (req, res) => {
+    return pool.query("SELECT * from product", (err, result) => {
+        res.send(result.rows)
+    })
+})
+
