@@ -1,5 +1,5 @@
 import { ProductDB, SpecificFruitLimitDB } from "../types";
-import React from "react";
+import React, { useState } from "react";
 import { Menu, TableCell } from "grommet";
 import { createSpecificFruitLimit } from "../requests";
 import { addLocalProduct } from "../mutations";
@@ -12,15 +12,19 @@ export const ProductInputCell = (props: {
     React.SetStateAction<SpecificFruitLimitDB[]>
   >;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <TableCell scope="row">
       <Menu
+        disabled={isLoading}
         label="Add New Product"
         items={props.selectableProducts.map((p) => ({
           label: p.product_name,
-          onClick: () =>
-            createSpecificFruitLimit(props.customerId, p.id).then(
-              async (data) => {
+          onClick: () => {
+            setIsLoading(true);
+            createSpecificFruitLimit(props.customerId, p.id)
+              .then((data) => {
                 addLocalProduct(
                   props.setSpecificFruitLimits,
                   getRandomInt(),
@@ -31,8 +35,9 @@ export const ProductInputCell = (props: {
                 );
 
                 return data;
-              }
-            ),
+              })
+              .finally(() => setIsLoading(false));
+          },
         }))}
       />
     </TableCell>
