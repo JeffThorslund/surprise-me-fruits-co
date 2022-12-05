@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+  Button,
   Grommet,
   Menu,
   Table,
@@ -132,12 +133,10 @@ export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
     <TableRow>
       <VoidCell />
       <TableCell>{props.specificFruitLimit.productName}</TableCell>
-      <TableCell scope="row">
-        <TextInput />
-      </TableCell>
-      <TableCell scope="row">
-        <TextInput />
-      </TableCell>
+      <LimitUpdateCellCluster
+        max={props.specificFruitLimit.max}
+        min={props.specificFruitLimit.min}
+      />
       <TableCell>
         <Close />
       </TableCell>
@@ -162,18 +161,70 @@ export const CustomerTableRow = (props: {
           { label: "Product Two", onClick: () => {} },
         ]}
       />
-      <TableCell scope="row">
-        <TextInput />
-      </TableCell>
-      <TableCell scope="row">
-        <TextInput />
-      </TableCell>
+      <LimitUpdateCellCluster
+        max={props.customerDataItem.max}
+        min={props.customerDataItem.min}
+      />
     </TableRow>
   );
 };
 
 export const VoidCell = () => {
   return <TableCell scope="row" />;
+};
+
+export const LimitUpdateCellCluster = (props: { min: number; max: number }) => {
+  const [min, setMin] = useState(props.min);
+  const [max, setMax] = useState(props.max);
+
+  return (
+    <>
+      <LimitInputCell
+        limit={min}
+        onChange={(e) => setMin(Number(e.target.value))}
+      />
+      <LimitInputCell
+        limit={max}
+        onChange={(e) => setMax(Number(e.target.value))}
+      />
+      {didValueChange(props.min, min) || didValueChange(props.max, max) ? (
+        <>
+          <TableCell>
+            <Button primary label="Save" />
+          </TableCell>
+
+          <TableCell>
+            <Button
+              secondary
+              label="Reset"
+              onClick={() => {
+                setMin(props.min);
+                setMax(props.max);
+              }}
+            />
+          </TableCell>
+        </>
+      ) : null}
+    </>
+  );
+};
+
+const didValueChange = (oldLimit: number, newLimit: number) =>
+  oldLimit !== newLimit;
+
+export const LimitInputCell = (props: {
+  limit: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  return (
+    <TableCell scope="row">
+      <TextInput
+        type={"number"}
+        value={props.limit}
+        onChange={props.onChange}
+      />
+    </TableCell>
+  );
 };
 
 export default App;
