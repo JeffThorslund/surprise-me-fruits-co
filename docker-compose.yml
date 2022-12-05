@@ -1,0 +1,30 @@
+version: "3"
+services:
+  client:
+    build: client
+    ports:
+      - "3000:3000"
+    container_name: client-docker
+    restart: always
+    links:
+      - server
+
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    container_name: server-docker
+    restart: always
+    links:
+      - database
+
+  database:
+    image: docker.io/bitnami/postgresql:15
+    ports:
+      - "5432:5432"
+    environment:
+      - "ALLOW_EMPTY_PASSWORD=yes"
+
+volumes:
+  postgresql_data:
+    driver: local
