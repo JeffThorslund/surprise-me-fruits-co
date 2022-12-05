@@ -24,6 +24,11 @@ services:
       - "5432:5432"
     environment:
       - "ALLOW_EMPTY_PASSWORD=yes"
+    volumes:
+      - ./database/customers.sql:/docker-entrypoint-initdb.d/customers.sql
+      - ./database/products.sql:/docker-entrypoint-initdb.d/products.sql
+      - ./database/specificFruitLimit.sql:/docker-entrypoint-initdb.d/specificFruitLimit.sql
+      - "postgresql_data:/bitnami/postgresql"
 
 volumes:
   postgresql_data:
