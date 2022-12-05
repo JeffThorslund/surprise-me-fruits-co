@@ -40,3 +40,46 @@ app.put("/global-fruit-limit", (req, res) => {
     );
 });
 
+// Specific Fruit Parameters CRUD
+
+// CREATE
+app.post("/specific-fruit-limit", (req, res) => {
+    const { customer_id, product_id } = req.body;
+    handlePoolQuery(
+        `INSERT INTO specific_fruit_limit(customer_id, product_id) VALUES (${customer_id}, ${product_id})`,
+        (result) => {
+            res.json(result.rows);
+        }
+    );
+});
+
+// READ
+app.get("/specific-fruit-limit", (req, res) => {
+    handlePoolQuery("SELECT * from specific_fruit_limit", (result) => {
+        res.json(result.rows);
+    });
+});
+
+// UPDATE
+app.put("/specific-fruit-limit", (req, res) => {
+    const { specific_fruit_limit_id, min, max } = req.body;
+    handlePoolQuery(
+        `UPDATE specific_fruit_limit SET min= ${min}, max= ${max} WHERE id = ${specific_fruit_limit_id}`,
+        (result) => {
+            res.json(result.rows);
+        }
+    );
+});
+
+// DELETE
+app.delete("/specific-fruit-limit", (req, res) => {
+    const { specific_fruit_limit_id } = req.body;
+    handlePoolQuery(
+        `DELETE FROM specific_fruit_limit WHERE id = ${specific_fruit_limit_id};`,
+        (result) => {
+            res.json(result.rows);
+        }
+    );
+});
+
+
