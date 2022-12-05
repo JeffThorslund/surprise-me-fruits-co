@@ -11,6 +11,7 @@ import {
 } from "grommet";
 import { useCustomerData } from "./_utils/useCustomerData";
 import { CustomerDataItem, CustomerDB, ProductDB, SFL } from "./types";
+import { Close } from "grommet-icons";
 
 const theme = {
   global: {
@@ -129,10 +130,17 @@ export const CustomerTableSection = (props: {
 export const ProductTableRow = (props: { specificFruitLimit: SFL }) => {
   return (
     <TableRow>
+      <VoidCell />
+      <TableCell>{props.specificFruitLimit.productName}</TableCell>
       <TableCell scope="row">
-        <strong>Chris</strong>
+        <TextInput />
       </TableCell>
-      <TableCell>Watermelon</TableCell>
+      <TableCell scope="row">
+        <TextInput />
+      </TableCell>
+      <TableCell>
+        <Close />
+      </TableCell>
     </TableRow>
   );
 };
