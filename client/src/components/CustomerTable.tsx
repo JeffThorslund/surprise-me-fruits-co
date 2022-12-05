@@ -5,9 +5,10 @@ import {
   SpecificFruitLimitDB,
 } from "../types";
 import React from "react";
-import { Box, Table, Text } from "grommet";
+import { Box, Table } from "grommet";
 import { CustomerTableHeader } from "./CustomerTableHeader";
 import { CustomerTableBody } from "./CustomerTableBody";
+import { TableTitle } from "./TableTitle";
 
 export const CustomerTable = (props: {
   customerDataTree: CustomerDataItem[];
@@ -19,12 +20,7 @@ export const CustomerTable = (props: {
 }) => {
   return (
     <Box background={"background-front"}>
-      <Box align={"center"} pad={"medium"}>
-        <Text size={"large"}>Customer Product Limit Database</Text>
-        <Text size={"medium"}>
-          Create, Update and Delete Produce Product Limits
-        </Text>
-      </Box>
+      <TableTitle />
       <Box pad={{ horizontal: "large" }} align={"start"}>
         <Table>
           <CustomerTableHeader />
