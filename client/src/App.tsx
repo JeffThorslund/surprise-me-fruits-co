@@ -1,19 +1,19 @@
-import React from 'react';
-import { Grommet } from 'grommet';
+import React from "react";
+import { Grommet } from "grommet";
 
 const theme = {
-    global: {
-        font: {
-            family: 'Roboto',
-            size: '18px',
-            height: '20px',
-        },
+  global: {
+    font: {
+      family: "Roboto",
+      size: "18px",
+      height: "20px",
     },
+  },
 };
 
 function App() {
   return (
-      <Grommet theme={theme}>
+    <Grommet theme={theme}>
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -27,7 +27,7 @@ function App() {
           Learn React
         </a>
       </header>
-      </Grommet>
+    </Grommet>
   );
 }
 
