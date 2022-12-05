@@ -1,5 +1,12 @@
 import React from "react";
-import { Grommet } from "grommet";
+import {
+  Grommet,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "grommet";
 
 const theme = {
   global: {
@@ -14,19 +21,32 @@ const theme = {
 function App() {
   return (
     <Grommet theme={theme}>
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableCell scope="col" border="bottom">
+              Name
+            </TableCell>
+            <TableCell scope="col" border="bottom">
+              Flavor
+            </TableCell>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell scope="row">
+              <strong>Eric</strong>
+            </TableCell>
+            <TableCell>Coconut</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell scope="row">
+              <strong>Chris</strong>
+            </TableCell>
+            <TableCell>Watermelon</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </Grommet>
   );
 }
