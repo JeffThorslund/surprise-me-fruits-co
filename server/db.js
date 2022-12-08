@@ -1,11 +1,15 @@
 const Pool = require("pg").Pool;
 
-const databaseHost = process.env.DATABASE_HOST || "localhost";
+// const databaseHost = process.env.DATABASE_HOST || "localhost";
+//
+// console.log(databaseHost);
 
-console.log(databaseHost);
+// const pool = new Pool({
+//   connectionString: `postgres://postgres:postgres@${databaseHost}:5432/database`,
+// });
 
 const pool = new Pool({
-  connectionString: `postgres://postgres:postgres@${databaseHost}:5432/database`,
+  connectionString: process.env.CONNECTION_STRING,
 });
 
 module.exports = pool;

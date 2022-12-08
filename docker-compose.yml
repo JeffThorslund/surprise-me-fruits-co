@@ -15,25 +15,28 @@ services:
       - "8080:8080"
     container_name: server-docker
     restart: always
-    links:
-      - database
     environment:
-      DATABASE_HOST: database
+      CONNECTION_STRING: postgres://gpfajajr:7HhTLKI9yaPni-cbeTMc4DoyWkA3ZEmJ@rajje.db.elephantsql.com/gpfajajr
 
-  database:
-    image: docker.io/bitnami/postgresql:15
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: database
-    volumes:
-      - ./database/customers.sql:/docker-entrypoint-initdb.d/customers.sql
-      - ./database/products.sql:/docker-entrypoint-initdb.d/products.sql
-      - ./database/specificFruitLimit.sql:/docker-entrypoint-initdb.d/specificFruitLimit.sql
-      - "postgresql_data:/bitnami/postgresql"
-
-volumes:
-  postgresql_data:
-    driver: local
+#    links:
+#      - database
+#    environment:
+#      DATABASE_HOST: database
+#
+#  database:
+#    image: docker.io/bitnami/postgresql:15
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: database
+#    volumes:
+#      - ./database/customers.sql:/docker-entrypoint-initdb.d/customers.sql
+#      - ./database/products.sql:/docker-entrypoint-initdb.d/products.sql
+#      - ./database/specificFruitLimit.sql:/docker-entrypoint-initdb.d/specificFruitLimit.sql
+#      - "postgresql_data:/bitnami/postgresql"
+#
+#volumes:
+#  postgresql_data:
+#    driver: local
